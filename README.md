@@ -1,21 +1,23 @@
-# HelloWorld
+# MAVM
 
-**TODO: Add description**
+A mini-interpreter for a custom scripting language written in Elixir.
 
-## Installation
+## What it is
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `hello_world` to your list of dependencies in `mix.exs`:
+A small educational **Mini Accumulator VM** with a single register.
 
-```elixir
-def deps do
-  [
-    {:hello_world, "~> 0.1.0"}
-  ]
-end
-```
+## Commands
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at <https://hexdocs.pm/hello_world>.
+| Command | Description |
+|---|---|
+| `add N` | `acc = acc + N` |
+| `cmp N L` | if `acc == N`, jump to line `L` |
+| `input` | read a number into `acc` |
+| `put` | print `acc` |
+| `puts TEXT` | print text |
+| `end` | terminate the program |
 
+## Run
+
+```bash
+mix run
