@@ -1,0 +1,6 @@
+puts Enter Password:
+input
+cmp 1337 4
+puts Wrong Password
+end
+puts GoodBoy

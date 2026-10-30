@@ -12,7 +12,10 @@ A small educational **Mini Accumulator VM** with a single register.
 |---|---|
 | `add N` | `acc = acc + N` |
 | `cmp N L` | if `acc == N`, jump to line `L` |
-| `input` | read a number into `acc` |
+| `jge N L` | if `acc >= N`, jump to line `L` |
+| `jle N L` | if `acc <= N`, jump to line `L` |
+| `jmp L` | jump to line `L` |
+| `read` | read a number into `acc` |
 | `put` | print `acc` |
 | `puts TEXT` | print text |
 | `end` | terminate the program |
@@ -20,4 +23,4 @@ A small educational **Mini Accumulator VM** with a single register.
 ## Run
 
 ```bash
-mix run
+mix run -- <script-file>

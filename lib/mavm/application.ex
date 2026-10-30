@@ -1,4 +1,4 @@
-defmodule HelloWorld.Application do
+defmodule Mavm.Application do
   # See https://hexdocs.pm/elixir/Application.html
   # for more information on OTP Applications
   @moduledoc false
@@ -11,10 +11,11 @@ defmodule HelloWorld.Application do
       # Starts a worker by calling: HelloWorld.Worker.start_link(arg)
       # {HelloWorld.Worker, arg}
     ]
-    main = HelloWorld.main()
+
+    main = Mavm.main()
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
-    opts = [strategy: :one_for_one, name: HelloWorld.Supervisor]
+    opts = [strategy: :one_for_one, name: Mavm.Supervisor]
     Supervisor.start_link(children, opts)
   end
 end
