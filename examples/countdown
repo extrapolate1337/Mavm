@@ -1,0 +1,7 @@
+puts Countdown:
+add 5
+puti
+dec
+cmp 0 6
+jmp 2
+end

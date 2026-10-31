@@ -1,5 +1,5 @@
 puts Enter Password:
-input
+read
 cmp 1337 4
 puts Wrong Password
 end

@@ -1,0 +1,21 @@
+puts Fill array:
+seta 0
+set 50
+read
+storex 50
+get 50
+inc
+set 50
+cmp 5 10
+jmp 2
+puts Values:
+seta 0
+set 50
+loadx 50
+puti
+get 50
+inc
+set 50
+cmp 5 20
+jmp 12
+end
