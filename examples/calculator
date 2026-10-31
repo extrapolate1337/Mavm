@@ -1,25 +1,24 @@
-puts Сalculator
+puts Calculator
 puts Enter X:
 read
 set 0
 puts Enter Y:
 read
 set 1
-puts 1. +
-puts 2. -
-puts 3. *
-puts 4. /
+puts 1.+
+puts 2.-
+puts 3.*
+puts 4./
 puts Op:
 read
 set 2
 get 2
-cmp 1 22
+cmp 1 21
 cmp 2 37
-cmp 3 52
-cmp 4 74
-puts Unknown op
-jmp 102
-
+cmp 3 53
+cmp 4 77
+puts Unknown
+jmp 109
 get 0
 set 3
 get 1
@@ -31,76 +30,81 @@ set 4
 get 3
 inc
 set 3
-jmp 26
+jmp 25
+puts Result:
 get 3
 puti
-jmp 102
-
+jmp 109
 get 0
 set 3
 get 1
 set 4
 get 4
-jle 0 49
+jle 0 50
 dec
 set 4
 get 3
 dec
 set 3
 jmp 41
+puts Result:
 get 3
 puti
-jmp 102
-
+jmp 109
 seta 0
 set 3
 get 1
 set 4
 get 4
-jle 0 71
+jle 0 74
 dec
 set 4
 get 0
 set 5
 get 5
-jle 0 56
+jle 0 71
 dec
 set 5
 get 3
 inc
 set 3
-jmp 62
-end
+jmp 63
+jmp 74
+jmp 74
+puts Result:
 get 3
 puti
-jmp 102
-
+jmp 109
 seta 0
 set 3
 get 0
+set 4
+get 1
+jle 0 107
+get 4
 set 5
 get 1
 set 6
-get 1
-set 4
+get 6
+jle 0 95
+dec
+set 6
 get 5
-jle 0 93
 dec
 set 5
-get 4
-dec
+jmp 87
+get 5
+jge 0 98
+jmp 104
 set 4
-get 4
-jle 0 96
-jmp 82
-end
-get 3
-puti
-jmp 102
 get 3
 inc
 set 3
-get 6
-set 4
-jmp 82
+jmp 83
+puts Result:
+get 3
+puti
+jmp 109
+puts Division by zero or negative divisor
+jmp 109
 end
