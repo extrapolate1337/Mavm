@@ -16,15 +16,15 @@ get 2
 cmp 1 21
 cmp 2 37
 cmp 3 53
-cmp 4 77
+cmp 4 76
 puts Unknown
-jmp 109
+jmp 108
 get 0
 set 3
 get 1
 set 4
 get 4
-jle 0 34
+jle 0 33
 dec
 set 4
 get 3
@@ -34,13 +34,13 @@ jmp 25
 puts Result:
 get 3
 puti
-jmp 109
+jmp 108
 get 0
 set 3
 get 1
 set 4
 get 4
-jle 0 50
+jle 0 49
 dec
 set 4
 get 3
@@ -50,13 +50,13 @@ jmp 41
 puts Result:
 get 3
 puti
-jmp 109
+jmp 108
 seta 0
 set 3
 get 1
 set 4
 get 4
-jle 0 74
+jle 0 72
 dec
 set 4
 get 0
@@ -69,42 +69,41 @@ get 3
 inc
 set 3
 jmp 63
-jmp 74
-jmp 74
+jmp 57
 puts Result:
 get 3
 puti
-jmp 109
+jmp 108
+get 1
+jle 0 107
 seta 0
 set 3
 get 0
-set 4
-get 1
-jle 0 107
-get 4
-set 5
-get 1
 set 6
 get 6
-jle 0 95
+set 5
+get 1
+set 4
+get 4
+jle 0 94
 dec
-set 6
+set 4
 get 5
 dec
 set 5
-jmp 87
+jmp 86
 get 5
-jge 0 98
-jmp 104
-set 4
+jge 0 97
+jmp 103
+get 5
+set 6
 get 3
 inc
 set 3
-jmp 83
+jmp 82
 puts Result:
 get 3
 puti
-jmp 109
+jmp 108
 puts Division by zero or negative divisor
-jmp 109
 end
