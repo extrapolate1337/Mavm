@@ -6,7 +6,7 @@ storex 50
 get 50
 inc
 set 50
-cmp 5 10
+je 5 10
 jmp 2
 puts Values:
 seta 0
@@ -16,6 +16,6 @@ puti
 get 50
 inc
 set 50
-cmp 5 20
+je 5 20
 jmp 12
 end

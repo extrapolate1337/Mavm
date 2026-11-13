@@ -19,6 +19,7 @@ a program counter (`line`), and a fixed-size memory (`mem`).
 |---|---|
 | `seta N` | `acc = N` |
 | `add N` | `acc = acc + N` |
+| `addm A` | `acc = acc + mem[mem[A]]` (indirect memory add) |
 | `sub N` | `acc = acc - N` |
 | `mul N` | `acc = acc * N` |
 | `div N` | `acc = acc / N` (integer division) |
@@ -32,29 +33,39 @@ a program counter (`line`), and a fixed-size memory (`mem`).
 
 | Command | Description |
 |---|---|
-| `cmp N L` | if `acc == N`, jump to line `L` |
-| `jge N L` | if `acc >= N`, jump to line `L` |
-| `jle N L` | if `acc <= N`, jump to line `L` |
-| `jmp L` | jump to line `L` |
+| `je N L` | if `acc == N`, jump to line `L`, else continue to next line |
+| `jne N L` | if `acc != N`, jump to line `L`, else continue to next line |
+| `jge N L` | if `acc >= N`, jump to line `L`, else continue to next line |
+| `jle N L` | if `acc <= N`, jump to line `L`, else continue to next line |
+| `jg N L` | if `acc > N`, jump to line `L`, else continue to next line |
+| `jl N L` | if `acc < N`, jump to line `L`, else continue to next line |
+| `jmp L` | unconditional jump to line `L` |
 | `end` | terminate the program |
+
+Jump targets are validated: if `L < 0` or `L >= max_line`, the program halts
+with an error message.
 
 ### Memory
 
 | Command | Description |
 |---|---|
-| `get I` | `acc = mem[I]` |
-| `set I` | `mem[I] = acc` |
-| `loadx A` | `acc = mem[mem[A]]` (indirect read) |
-| `storex A` | `mem[mem[A]] = acc` (indirect write) |
-| `grow N` | append `N` zero cells to memory |
+| `get I` | `acc = mem[I]` (direct read) |
+| `set I` | `mem[I] = acc` (direct write) |
+| `ldx A` | `acc = mem[mem[A]]` (indirect read) |
+| `stx A` | `mem[mem[A]] = acc` (indirect write) |
+| `sex A` | alias for `stx` (see *Known issues*) |
+| `grow N` | append `N` zero cells to memory; `N` must be `>= 2` |
+
+All memory indices are bounds-checked. An out-of-range index (or an
+out-of-range target inside an indirect access) halts the VM with an error.
 
 ### I/O
 
 | Command | Description |
 |---|---|
-| `read` | read a number from stdin into `acc` |
-| `puti` | print `acc` |
-| `puts TEXT` | print text |
+| `read` | read a line from stdin and parse it as an integer into `acc` |
+| `puti` | print `acc` to stdout |
+| `puts TEXT` | print `TEXT` (all remaining tokens, joined by a single space) |
 
 ## Line numbering
 

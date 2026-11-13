@@ -1,6 +1,6 @@
 puts Enter Password:
 read
-cmp 1337 4
+je 1337 5
 puts Wrong Password
 end
 puts GoodBoy

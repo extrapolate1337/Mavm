@@ -13,10 +13,10 @@ puts Op:
 read
 set 2
 get 2
-cmp 1 21
-cmp 2 37
-cmp 3 53
-cmp 4 76
+je 1 21
+je 2 37
+je 3 53
+je 4 76
 puts Unknown
 jmp 108
 get 0

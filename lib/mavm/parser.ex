@@ -1,9 +1,12 @@
 defmodule Mavm.Parser do
   def parse(line) do
     case String.split(line, " ") do
-      ["cmp", num, lnum] -> {:cmp, String.to_integer(num), String.to_integer(lnum)}
+      ["je", num, lnum] -> {:je, String.to_integer(num), String.to_integer(lnum)}
+      ["jne", num, lnum] -> {:jne, String.to_integer(num), String.to_integer(lnum)}
       ["jge", num, lnum] -> {:jge, String.to_integer(num), String.to_integer(lnum)}
       ["jle", num, lnum] -> {:jle, String.to_integer(num), String.to_integer(lnum)}
+      ["jg", num, lnum] -> {:jg, String.to_integer(num), String.to_integer(lnum)}
+      ["jl", num, lnum] -> {:jl, String.to_integer(num), String.to_integer(lnum)}
       ["jmp", lnum] -> {:jmp, String.to_integer(lnum)}
       ["grow", len] -> {:grow, String.to_integer(len)}
       ["get", idx] -> {:get, String.to_integer(idx)}
@@ -13,6 +16,7 @@ defmodule Mavm.Parser do
       ["sex", addr] -> {:stx, String.to_integer(addr)}
       ["seta", num] -> {:seta, String.to_integer(num)}
       ["add", num] -> {:add, String.to_integer(num)}
+      ["addm", addr] -> {:addm, String.to_integer(addr)}
       ["sub", num] -> {:sub, String.to_integer(num)}
       ["mul", num] -> {:mul, String.to_integer(num)}
       ["div", num] -> {:div, String.to_integer(num)}

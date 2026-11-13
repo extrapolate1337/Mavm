@@ -8,12 +8,12 @@ set 0
 seta 1
 set 1
 get 2
-cmp 0 31
+je 0 31
 get 1
 set 3
 get 0
 set 4
-cmp 0 23
+je 0 23
 get 3
 inc
 set 3

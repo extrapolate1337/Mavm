@@ -1,8 +1,20 @@
 defmodule Mavm.Executor do
   def execute(head, line, acc, mem, max_line) do
     case head do
-      {:cmp, num, line_num} ->
+      {:je, num, line_num} ->
         if acc == num do
+          if line_num >= max_line or line_num < 0 do
+            IO.puts("Line number out of range. Line: #{line}")
+            {:end, acc, mem}
+          else
+            {line_num, acc, mem}
+          end
+        else
+          {line + 1, acc, mem}
+        end
+
+      {:jne, num, line_num} ->
+        if acc != num do
           if line_num >= max_line or line_num < 0 do
             IO.puts("Line number out of range. Line: #{line}")
             {:end, acc, mem}
@@ -27,6 +39,30 @@ defmodule Mavm.Executor do
 
       {:jle, num, line_num} ->
         if acc <= num do
+          if line_num >= max_line or line_num < 0 do
+            IO.puts("Line number out of range. Line: #{line}")
+            {:end, acc, mem}
+          else
+            {line_num, acc, mem}
+          end
+        else
+          {line + 1, acc, mem}
+        end
+
+      {:jg, num, line_num} ->
+        if acc > num do
+          if line_num >= max_line or line_num < 0 do
+            IO.puts("Line number out of range. Line: #{line}")
+            {:end, acc, mem}
+          else
+            {line_num, acc, mem}
+          end
+        else
+          {line + 1, acc, mem}
+        end
+
+      {:jl, num, line_num} ->
+        if acc < num do
           if line_num >= max_line or line_num < 0 do
             IO.puts("Line number out of range. Line: #{line}")
             {:end, acc, mem}
@@ -105,6 +141,14 @@ defmodule Mavm.Executor do
 
       {:add, num} ->
         {line + 1, acc + num, mem}
+
+      {:addm, addr} ->
+        if addr < 0 or addr >= tuple_size(mem) do
+          IO.puts("Addm address cell out of range: #{addr}. Line: #{line}")
+          {:end, acc, mem}
+        else
+          {line + 1, acc + elem(mem, addr), mem}
+        end
 
       {:sub, num} ->
         {line + 1, acc - num, mem}
