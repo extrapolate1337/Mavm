@@ -42,8 +42,8 @@ use `ldx`/`stx` if you need one level of indirection).
 | `addm A` | `acc = acc + mem[A]` |
 | `subm A` | `acc = acc - mem[A]` |
 | `mulm A` | `acc = acc * mem[A]` |
-| `divm A` | `acc = acc div mem[A]` — halts if `mem[A] == 0` |
-| `modm A` | `acc = acc rem mem[A]` — halts if `mem[A] == 0` |
+| `divm A` | `acc = acc / mem[A]` — halts if `mem[A] == 0` |
+| `modm A` | `acc = acc % mem[A]` — halts if `mem[A] == 0` |
 
 `divm` and `modm` perform a **runtime** zero-divisor check (the divisor
 is only known at execution time, unlike `div 0` / `mod 0`, which the
