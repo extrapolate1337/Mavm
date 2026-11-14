@@ -1,0 +1,59 @@
+jmp 51
+get 2
+stx 1
+ret
+ldx 1
+set 0
+ret
+get 1
+set 3
+seta 16
+set 1
+call 4
+get 0
+inc
+set 0
+get 0
+set 2
+call 1
+call 4
+get 0
+set 1
+get 1
+add 16
+set 1
+get 3
+set 2
+call 1
+ret
+seta 16
+set 1
+call 4
+get 0
+set 1
+get 1
+add 16
+set 1
+call 4
+get 0
+set 3
+seta 16
+set 1
+call 4
+get 0
+dec
+set 0
+get 0
+set 2
+call 1
+get 3
+set 0
+ret
+seta 5
+set 1
+call 7
+seta 0
+set 1
+call 28
+get 0
+puti
