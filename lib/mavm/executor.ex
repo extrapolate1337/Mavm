@@ -1,4 +1,6 @@
 defmodule Mavm.Executor do
+  import Bitwise
+
   def execute(head, line, acc, mem, max_line) do
     case head do
       {:je, num, line_num} ->
@@ -81,6 +83,58 @@ defmodule Mavm.Executor do
           {line_num, acc, mem}
         end
 
+      {:shl, num} ->
+        if num < 0 do
+          IO.puts("Shift amount must be non-negative, got #{num}. Line: #{line}")
+          {:end, acc, mem}
+        else
+          {line + 1, acc <<< num, mem}
+        end
+
+      {:shr, num} ->
+        if num < 0 do
+          IO.puts("Shift amount must be non-negative, got #{num}. Line: #{line}")
+          {:end, acc, mem}
+        else
+          {line + 1, acc >>> num, mem}
+        end
+
+      {:shlm, addr} ->
+        if addr < 0 or addr >= tuple_size(mem) do
+          IO.puts("Shlm address cell out of range: #{addr}. Line: #{line}")
+          {:end, acc, mem}
+        else
+          shift = elem(mem, addr)
+
+          if shift < 0 do
+            IO.puts(
+              "Shift amount must be non-negative, got #{shift} (mem[#{addr}]). Line: #{line}"
+            )
+
+            {:end, acc, mem}
+          else
+            {line + 1, acc <<< shift, mem}
+          end
+        end
+
+      {:shrm, addr} ->
+        if addr < 0 or addr >= tuple_size(mem) do
+          IO.puts("Shrm address cell out of range: #{addr}. Line: #{line}")
+          {:end, acc, mem}
+        else
+          shift = elem(mem, addr)
+
+          if shift < 0 do
+            IO.puts(
+              "Shift amount must be non-negative, got #{shift} (mem[#{addr}]). Line: #{line}"
+            )
+
+            {:end, acc, mem}
+          else
+            {line + 1, acc >>> shift, mem}
+          end
+        end
+
       {:grow, len} ->
         if len < 2 do
           IO.puts("Grow size must be at least 2, got #{len}. Line: #{line}")
@@ -153,8 +207,24 @@ defmodule Mavm.Executor do
       {:sub, num} ->
         {line + 1, acc - num, mem}
 
+      {:subm, addr} ->
+        if addr < 0 or addr >= tuple_size(mem) do
+          IO.puts("Subm address cell out of range: #{addr}. Line: #{line}")
+          {:end, acc, mem}
+        else
+          {line + 1, acc - elem(mem, addr), mem}
+        end
+
       {:mul, num} ->
         {line + 1, acc * num, mem}
+
+      {:mulm, addr} ->
+        if addr < 0 or addr >= tuple_size(mem) do
+          IO.puts("Mulm address cell out of range: #{addr}. Line: #{line}")
+          {:end, acc, mem}
+        else
+          {line + 1, acc * elem(mem, addr), mem}
+        end
 
       {:div, 0} ->
         IO.puts("Division by zero. Line: #{line}")
@@ -163,12 +233,42 @@ defmodule Mavm.Executor do
       {:div, num} ->
         {line + 1, div(acc, num), mem}
 
+      {:divm, addr} ->
+        if addr < 0 or addr >= tuple_size(mem) do
+          IO.puts("Divm address cell out of range: #{addr}. Line: #{line}")
+          {:end, acc, mem}
+        else
+          divisor = elem(mem, addr)
+
+          if divisor == 0 do
+            IO.puts("Division by zero (mem[#{addr}]). Line: #{line}")
+            {:end, acc, mem}
+          else
+            {line + 1, div(acc, divisor), mem}
+          end
+        end
+
       {:mod, 0} ->
         IO.puts("Mod division by zero. Line: #{line}")
         {:end, acc, mem}
 
       {:mod, num} ->
         {line + 1, rem(acc, num), mem}
+
+      {:modm, addr} ->
+        if addr < 0 or addr >= tuple_size(mem) do
+          IO.puts("Modm address cell out of range: #{addr}. Line: #{line}")
+          {:end, acc, mem}
+        else
+          divisor = elem(mem, addr)
+
+          if divisor == 0 do
+            IO.puts("Mod division by zero (mem[#{addr}]). Line: #{line}")
+            {:end, acc, mem}
+          else
+            {line + 1, rem(acc, divisor), mem}
+          end
+        end
 
       :inc ->
         {line + 1, acc + 1, mem}

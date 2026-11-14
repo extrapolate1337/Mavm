@@ -15,35 +15,54 @@ a program counter (`line`), and a fixed-size memory (`mem`).
 
 ### Arithmetic
 
+All immediate-operand arithmetic. `N` is a literal integer baked into the
+instruction.
+
 | Command | Description |
 |---|---|
 | `seta N` | `acc = N` |
 | `add N` | `acc = acc + N` |
-| `addm A` | `acc = acc + mem[mem[A]]` (indirect memory add) |
 | `sub N` | `acc = acc - N` |
 | `mul N` | `acc = acc * N` |
-| `div N` | `acc = acc / N` (integer division) |
-| `mod N` | `acc = acc % N` |
+| `div N` | `acc = acc div N` (integer division) |
+| `mod N` | `acc = acc rem N` |
 | `inc` | `acc = acc + 1` |
 | `dec` | `acc = acc - 1` |
 | `neg` | `acc = -acc` |
 | `abs` | `acc = abs(acc)` |
 
-### Control flow
+### Memory arithmetic
+
+Same operations, but the right-hand operand is read from memory:
+`acc = acc <op> mem[A]`. `A` is a **direct** memory index (not indirect —
+use `ldx`/`stx` if you need one level of indirection).
 
 | Command | Description |
 |---|---|
-| `je N L` | if `acc == N`, jump to line `L`, else continue to next line |
-| `jne N L` | if `acc != N`, jump to line `L`, else continue to next line |
-| `jge N L` | if `acc >= N`, jump to line `L`, else continue to next line |
-| `jle N L` | if `acc <= N`, jump to line `L`, else continue to next line |
-| `jg N L` | if `acc > N`, jump to line `L`, else continue to next line |
-| `jl N L` | if `acc < N`, jump to line `L`, else continue to next line |
-| `jmp L` | unconditional jump to line `L` |
-| `end` | terminate the program |
+| `addm A` | `acc = acc + mem[A]` |
+| `subm A` | `acc = acc - mem[A]` |
+| `mulm A` | `acc = acc * mem[A]` |
+| `divm A` | `acc = acc div mem[A]` — halts if `mem[A] == 0` |
+| `modm A` | `acc = acc rem mem[A]` — halts if `mem[A] == 0` |
 
-Jump targets are validated: if `L < 0` or `L >= max_line`, the program halts
-with an error message.
+`divm` and `modm` perform a **runtime** zero-divisor check (the divisor
+is only known at execution time, unlike `div 0` / `mod 0`, which the
+parser can reject statically).
+
+### Bitwise
+
+Bit shifts. `acc` is treated as a signed integer; `shr` is an
+**arithmetic** right shift (sign is preserved, e.g. `-8 shr 1 == -4`).
+
+| Command | Description |
+|---|---|
+| `shl N` | `acc = acc <<< N` (shift left) |
+| `shr N` | `acc = acc >>> N` (arithmetic shift right) |
+| `shlm A` | `acc = acc <<< mem[A]` (shift left by memory value) |
+| `shrm A` | `acc = acc >>> mem[A]` (shift right by memory value) |
+
+Shift amount must be **non-negative**; a negative amount halts the VM
+with an error (Elixir raises `ArithmeticError` on `n <<< -k`).
 
 ### Memory
 
@@ -58,6 +77,22 @@ with an error message.
 
 All memory indices are bounds-checked. An out-of-range index (or an
 out-of-range target inside an indirect access) halts the VM with an error.
+
+### Control flow
+
+| Command | Description |
+|---|---|
+| `je N L` | if `acc == N`, jump to line `L`, else continue to next line |
+| `jne N L` | if `acc != N`, jump to line `L`, else continue to next line |
+| `jge N L` | if `acc >= N`, jump to line `L`, else continue to next line |
+| `jle N L` | if `acc <= N`, jump to line `L`, else continue to next line |
+| `jg N L` | if `acc > N`, jump to line `L`, else continue to next line |
+| `jl N L` | if `acc < N`, jump to line `L`, else continue to next line |
+| `jmp L` | unconditional jump to line `L` |
+| `end` | terminate the program |
+
+Jump targets are validated: if `L < 0` or `L >= max_line`, the program
+halts with an error message.
 
 ### I/O
 
