@@ -1,0 +1,80 @@
+jmp 55
+get 2
+stx 1
+ret
+ldx 1
+set 0
+ret
+get 1
+set 3
+seta 16
+set 1
+call 4
+get 0
+inc
+set 0
+get 0
+set 2
+call 1
+call 4
+get 0
+set 1
+get 1
+add 16
+set 1
+get 3
+set 2
+call 1
+ret
+seta 16
+set 1
+call 4
+get 0
+set 1
+get 1
+add 16
+set 1
+call 4
+get 0
+set 3
+seta 16
+set 1
+call 4
+get 0
+dec
+set 0
+get 0
+set 2
+call 1
+get 3
+set 0
+ret
+seta 16
+set 1
+call 4
+ret
+puts Enter numbers to sum (0 for exit):
+read
+set 1
+get 1
+set 14
+call 7
+get 14
+subm 15
+jne 0 56
+seta 0
+set 14
+seta 0
+set 15
+call 28
+get 14
+addm 0
+set 14
+call 51
+get 15
+subm 0
+jne 0 68
+puts Result:
+get 14
+puti
+end
