@@ -6,7 +6,7 @@ defmodule Mavm do
       acc
     else
       case Executor.execute(elem(program, line), line, acc, mem, tuple_size(program)) do
-        {:end, acc, mem} -> acc
+        {:end, acc, _mem} -> acc
         {line, acc, mem} -> run(program, line, acc, mem)
       end
     end
