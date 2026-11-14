@@ -9,6 +9,8 @@ defmodule Mavm.Parser do
       ["jg", num, lnum] -> {:jg, String.to_integer(num), String.to_integer(lnum)}
       ["jl", num, lnum] -> {:jl, String.to_integer(num), String.to_integer(lnum)}
       ["jmp", lnum] -> {:jmp, String.to_integer(lnum)}
+      ["call", lnum] -> {:call, String.to_integer(lnum)}
+      ["ret"] -> :ret
       ["end"] -> :end
       # Memory
       ["grow", len] -> {:grow, String.to_integer(len)}

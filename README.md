@@ -4,7 +4,7 @@
 
 **M**ini **A**ccumulator **V**irtual **M**achine
 
-*A tiny educational interpreter in Elixir — one register, 64 memory cells, no dependencies.*
+*A tiny educational interpreter in Elixir — one register.*
 
 [![Language](https://img.shields.io/badge/language-Elixir-4B275F?logo=elixir&logoColor=white)](https://elixir-lang.org/)
 [![Build](https://img.shields.io/badge/build-mix-6E4A7E?logo=elixir&logoColor=white)](https://hexdocs.pm/mix/Mix.html)
@@ -14,7 +14,7 @@
 
 MAVM is a small accumulator-based VM and an interpreter for an assembly-like language.
 The parser turns each line into an instruction tuple; the executor updates three values:
-`acc` (the only register), `line` (program counter), and `mem` (64 cells by default).
+`acc` (the only register), `line` (program counter), and `mem` (128 cells by default).
 
 ## 🚀 Quick Start
 
@@ -98,6 +98,12 @@ indirection.
 | `jl N L` | jump to `L` if `acc < N` |
 | `jmp L` | unconditional jump to `L` |
 | `end` | terminate the program |
+
+### 🧵 Subroutines
+| Command | Effect |
+|---|---|
+| `call L`	| push `line + 1` onto `ret_stack`, jump to L |
+| `ret`	| pop the top of `ret_stack` and jump there — halts if the stack is empty |
 
 ### 🖨️ I/O
 
