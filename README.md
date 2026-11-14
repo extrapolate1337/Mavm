@@ -31,46 +31,75 @@ printf '10\n' | mix run -- examples/fibonacci
 A program is read from the file passed as the first argument. Instructions are numbered from
 `0`; blank lines and comments (`# ...`) are skipped before numbering.
 
-## 📜 Instructions
+## 📜 Instruction Set
 
-### Arithmetic
+Commands and arguments are separated by spaces. `N` and `I` are integer literals, `A` is a
+memory index.
+
+### ➕ Arithmetic
 
 | Command | Effect |
 |---|---|
 | `seta N` | `acc = N` |
-| `add N` / `sub N` / `mul N` | `acc += N`, `acc -= N`, `acc *= N` |
-| `div N` / `mod N` | integer division / remainder |
-| `inc` / `dec` / `neg` / `abs` | `+1` / `-1` / negate / absolute value |
+| `add N` | `acc = acc + N` |
+| `sub N` | `acc = acc - N` |
+| `mul N` | `acc = acc * N` |
+| `div N` | `acc = acc div N` — integer division |
+| `mod N` | `acc = acc rem N` — remainder |
+| `inc` | `acc = acc + 1` |
+| `dec` | `acc = acc - 1` |
+| `neg` | `acc = -acc` |
+| `abs` | `acc = abs(acc)` |
 
-### Memory
+### 🧮 Memory Arithmetic
+
+The right-hand operand comes from memory. `A` is a direct address; use `ldx`/`stx` for
+indirection.
 
 | Command | Effect |
 |---|---|
-| `get I` / `set I` | direct read / write at `mem[I]` |
-| `ldx A` / `stx A` | indirect read / write through `mem[A]` |
+| `addm A` | `acc = acc + mem[A]` |
+| `subm A` | `acc = acc - mem[A]` |
+| `mulm A` | `acc = acc * mem[A]` |
+| `divm A` | `acc = acc div mem[A]` — halts on zero |
+| `modm A` | `acc = acc rem mem[A]` — halts on zero |
+
+### 🔢 Bitwise Operations
+
+`shr` is an arithmetic right shift: the sign is preserved.
+
+| Command | Effect |
+|---|---|
+| `shl N` | `acc = acc <<< N` |
+| `shr N` | `acc = acc >>> N` |
+| `shlm A` | `acc = acc <<< mem[A]` |
+| `shrm A` | `acc = acc >>> mem[A]` |
+
+### 💾 Memory
+
+| Command | Effect |
+|---|---|
+| `get I` | `acc = mem[I]` |
+| `set I` | `mem[I] = acc` |
+| `ldx A` | `acc = mem[mem[A]]` |
+| `stx A` | `mem[mem[A]] = acc` |
 | `sex A` | alias for `stx` |
 | `grow N` | append `N` zero cells (`N >= 2`) |
-| `addm A` / `subm A` / `mulm A` | arithmetic with `mem[A]` |
-| `divm A` / `modm A` | division / remainder by `mem[A]` |
 
-### Bitwise
+### 🔀 Control Flow
 
 | Command | Effect |
 |---|---|
-| `shl N` / `shr N` | shift left / arithmetic shift right |
-| `shlm A` / `shrm A` | same, with shift amount from `mem[A]` |
+| `je N L` | jump to `L` if `acc == N` |
+| `jne N L` | jump to `L` if `acc != N` |
+| `jge N L` | jump to `L` if `acc >= N` |
+| `jle N L` | jump to `L` if `acc <= N` |
+| `jg N L` | jump to `L` if `acc > N` |
+| `jl N L` | jump to `L` if `acc < N` |
+| `jmp L` | unconditional jump to `L` |
+| `end` | terminate the program |
 
-### Control Flow
-
-| Command | Effect |
-|---|---|
-| `je N L` / `jne N L` | jump if `acc == N` / `acc != N` |
-| `jge N L` / `jle N L` | jump if `acc >= N` / `acc <= N` |
-| `jg N L` / `jl N L` | jump if `acc > N` / `acc < N` |
-| `jmp L` | unconditional jump |
-| `end` | halt the program |
-
-### I/O
+### 🖨️ I/O
 
 | Command | Effect |
 |---|---|
