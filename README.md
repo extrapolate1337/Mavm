@@ -15,6 +15,7 @@
 MAVM is a small accumulator-based VM and an interpreter for an assembly-like language.
 The parser turns each line into an instruction tuple; the executor updates three values:
 `acc` (the only register), `line` (program counter), and `mem` (128 cells by default).
+Programs can also be split across files: **a file is a function**.
 
 ## 🚀 Quick Start
 
@@ -25,7 +26,7 @@ git clone https://github.com/extrapolate1337/Mavm.git
 cd Mavm
 
 mix run -- examples/countdown
-printf '10\n' | mix run -- examples/fibonacci
+printf '20\n' | mix run -- examples/fibonacci.mavm
 ```
 
 A program is read from the file passed as the first argument. Instructions are numbered from
@@ -102,8 +103,9 @@ indirection.
 ### 🧵 Subroutines
 | Command | Effect |
 |---|---|
-| `call L`	| push `line + 1` onto `ret_stack`, jump to L |
-| `ret`	| pop the top of `ret_stack` and jump there — halts if the stack is empty |
+| `call L`	| push `line + 1` onto `ret_stack`, jump to `L` — local call by line number |
+| `callf P`	| execute the file at `PATH` as a function (see below) |
+| `ret`	| pop the top of `ret_stack` and jump there; if the stack is empty, return `acc` from the current `callf` file |
 
 ### 🖨️ I/O
 
@@ -137,13 +139,6 @@ Countdown:
 
 More programs live in [`examples/`](examples): a calculator, password check, Fibonacci, and
 indirect memory addressing.
-
-## ⚠️ Notes
-
-- Memory indices and jump targets are bounds-checked; invalid accesses halt the VM.
-- `div 0` and negative shift amounts halt with an error.
-- Unknown commands print a warning and execution continues.
-- `examples/array` uses obsolete `loadx`/`storex`; use `ldx`/`stx`.
 
 ## 🛠️ Development
 

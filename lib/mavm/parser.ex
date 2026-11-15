@@ -9,9 +9,11 @@ defmodule Mavm.Parser do
       ["jg", num, lnum] -> {:jg, String.to_integer(num), String.to_integer(lnum)}
       ["jl", num, lnum] -> {:jl, String.to_integer(num), String.to_integer(lnum)}
       ["jmp", lnum] -> {:jmp, String.to_integer(lnum)}
-      ["call", lnum] -> {:call, String.to_integer(lnum)}
-      ["ret"] -> :ret
       ["end"] -> :end
+      # Subroutines
+      ["call", lnum] -> {:call, String.to_integer(lnum)}
+      ["callf", path] -> {:callf, path}
+      ["ret"] -> :ret
       # Memory
       ["grow", len] -> {:grow, String.to_integer(len)}
       ["get", idx] -> {:get, String.to_integer(idx)}
@@ -46,5 +48,19 @@ defmodule Mavm.Parser do
       ["puts" | string] -> {:puts, Enum.join(string, " ")}
       _ -> {:unknown, line}
     end
+  end
+
+  def parse_file(path) do
+    if not File.exists?(path) do
+      IO.puts(:stderr, "\nFile not found: #{path}")
+      System.halt(1)
+    end
+
+    path
+    |> File.read!()
+    |> String.split("\n", trim: true)
+    |> Enum.reject(&String.starts_with?(String.trim(&1), "#"))
+    |> Enum.map(&parse/1)
+    |> List.to_tuple()
   end
 end

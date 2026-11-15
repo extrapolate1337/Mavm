@@ -91,14 +91,16 @@ defmodule Mavm.Executor do
           {line_num, acc, mem, [line + 1 | ret_stack]}
         end
 
+      {:callf, path} ->
+        {:callf, path, line + 1, acc, mem, ret_stack}
+
       :ret ->
         case ret_stack do
           [ret_addr | rest] ->
             {ret_addr, acc, mem, rest}
 
           [] ->
-            IO.puts("Return stack underflow. Line: #{line}")
-            {:end, acc, mem, ret_stack}
+            {:ret, acc, mem, ret_stack}
         end
 
       :end ->
