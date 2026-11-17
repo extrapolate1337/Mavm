@@ -158,6 +158,17 @@ defmodule Mavm.Executor do
           end
         end
 
+      {:xorm, addr} ->
+        if addr < 0 or addr >= tuple_size(mem) do
+          IO.puts("Xorm address cell out of range: #{addr}. Line: #{line}")
+          {:end, acc, mem, ret_stack}
+        else
+          {line + 1, bxor(acc, elem(mem, addr)), mem, ret_stack}
+        end
+
+      {:xor, num} ->
+        {line + 1, bxor(acc, num), mem, ret_stack}
+
       {:grow, len} ->
         if len < 2 do
           IO.puts("Grow size must be at least 2, got #{len}. Line: #{line}")

@@ -75,6 +75,8 @@ indirection.
 | `shr N` | `acc = acc >>> N` |
 | `shlm A` | `acc = acc <<< mem[A]` |
 | `shrm A` | `acc = acc >>> mem[A]` |
+| `xor N`  | `acc = bxor(acc, N)`        |
+| `xorm A` | `acc = bxor(acc, mem[A])`   |
 
 ### 💾 Memory
 

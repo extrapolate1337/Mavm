@@ -26,6 +26,8 @@ defmodule Mavm.Parser do
       ["shr", num] -> {:shr, String.to_integer(num)}
       ["shlm", addr] -> {:shlm, String.to_integer(addr)}
       ["shrm", addr] -> {:shrm, String.to_integer(addr)}
+      ["xorm", addr] -> {:xorm, String.to_integer(addr)}
+      ["xor", num] -> {:xor, String.to_integer(num)}
       # Arithmetic
       ["seta", num] -> {:seta, String.to_integer(num)}
       ["add", num] -> {:add, String.to_integer(num)}
