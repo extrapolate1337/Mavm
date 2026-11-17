@@ -1,0 +1,152 @@
+jmp 1
+seta 104
+set 10
+seta 101
+set 11
+seta 108
+set 12
+seta 108
+set 13
+seta 111
+set 14
+seta 10
+set 15
+puts Enter password:
+seta 17
+set 1
+call 102
+seta 10
+set 1
+seta 17
+set 2
+call 127
+seta 1
+set 1
+get 0
+subm 1
+je 0 28
+jmp 30
+puts Correct!
+end
+puts Wrong password!
+end
+get 2
+stx 1
+ret
+ldx 1
+set 0
+ret
+get 1
+set 3
+seta 16
+set 1
+call 35
+get 0
+inc
+set 0
+get 0
+set 2
+call 32
+call 35
+get 0
+set 1
+get 1
+add 16
+set 1
+get 3
+set 2
+call 32
+ret
+seta 16
+set 1
+call 35
+get 0
+set 1
+get 1
+add 16
+set 1
+call 35
+get 0
+set 3
+seta 16
+set 1
+call 35
+get 0
+dec
+set 0
+get 0
+set 2
+call 32
+get 3
+set 0
+ret
+seta 16
+set 1
+call 35
+ret
+get 1
+shlm 2
+set 0
+ret
+get 1
+shrm 2
+set 0
+ret
+get 1
+neg
+set 0
+ret
+get 1
+neg
+set 0
+ret
+seta 10
+set 0
+getc
+set 2
+stx 1
+get 1
+inc
+set 1
+get 2
+subm 0
+jne 0 104
+ret
+seta 10
+set 0
+ldx 1
+set 2
+get 2
+putc
+get 1
+inc
+set 1
+get 2
+subm 0
+jne 0 116
+ret
+seta 10
+set 0
+ldx 1
+set 3
+ldx 2
+set 4
+get 1
+inc
+set 1
+get 2
+inc
+set 2
+get 3
+subm 0
+je 0 146
+get 3
+subm 4
+je 0 129
+jmp 149
+seta 1
+set 0
+ret
+seta 0
+set 0
+ret
