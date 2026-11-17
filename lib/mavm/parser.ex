@@ -43,7 +43,9 @@ defmodule Mavm.Parser do
       ["neg"] -> :neg
       ["abs"] -> :abs
       # I/O
-      ["read"] -> :read
+      ["getc"] -> :getc
+      ["putc"] -> :putc
+      ["geti"] -> :geti
       ["puti"] -> :puti
       ["puts" | string] -> {:puts, Enum.join(string, " ")}
       _ -> {:unknown, line}

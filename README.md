@@ -111,8 +111,10 @@ indirection.
 
 | Command | Effect |
 |---|---|
-| `read` | read an integer from stdin into `acc` |
+| `geti` | read an integer from stdin into `acc` |
 | `puti` | print `acc` |
+| `getc` | read one character from stdin; `acc` = its Unicode codepoint |
+| `putc' | print `acc` as a Unicode character |
 | `puts TEXT` | print text |
 
 ## 🎬 Example

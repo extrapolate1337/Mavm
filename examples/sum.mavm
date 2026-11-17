@@ -54,7 +54,7 @@ set 1
 call 4
 ret
 puts Enter numbers to sum (0 for exit):
-read
+geti
 set 1
 get 1
 set 14

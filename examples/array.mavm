@@ -1,7 +1,7 @@
 puts Fill array:
 seta 0
 set 50
-read
+geti
 storex 50
 get 50
 inc

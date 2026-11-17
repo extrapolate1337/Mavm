@@ -305,11 +305,19 @@ defmodule Mavm.Executor do
       :abs ->
         {line + 1, abs(acc), mem, ret_stack}
 
-      :read ->
+      :geti ->
         {line + 1, String.to_integer(String.trim(IO.gets(""))), mem, ret_stack}
 
       :puti ->
         IO.puts(acc)
+        {line + 1, acc, mem, ret_stack}
+
+      :getc ->
+        <<code::utf8>> = IO.getn("", 1)
+        {line + 1, code, mem, ret_stack}
+
+      :putc ->
+        IO.write(<<acc::utf8>>)
         {line + 1, acc, mem, ret_stack}
 
       {:puts, string} ->

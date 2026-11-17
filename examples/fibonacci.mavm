@@ -1,5 +1,5 @@
 puts Enter number:
-read
+geti
 set 2
 get 2
 jle -1 35

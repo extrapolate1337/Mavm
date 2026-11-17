@@ -1,16 +1,16 @@
 puts Calculator
 puts Enter X:
-read
+geti
 set 0
 puts Enter Y:
-read
+geti
 set 1
 puts 1.+
 puts 2.-
 puts 3.*
 puts 4./
 puts Op:
-read
+geti
 set 2
 get 2
 je 1 21
