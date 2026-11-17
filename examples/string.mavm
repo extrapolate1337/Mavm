@@ -1,0 +1,33 @@
+jmp 26
+seta 10
+set 0
+getc
+set 2
+stx 1
+get 1
+inc
+set 1
+get 2
+subm 0
+jne 0 3
+ret
+seta 10
+set 0
+ldx 1
+set 2
+get 2
+putc
+get 1
+inc
+set 1
+get 2
+subm 0
+jne 0 15
+ret
+seta 17
+set 1
+call 1
+seta 17
+set 1
+call 13
+end
